@@ -119,6 +119,7 @@ export default function Home() {
 
   useEffect(() => {
     if (elementRef.current) {
+      // @ts-ignore
       const boundingRect = elementRef.current.getBoundingClientRect();
       const dimensions: Dimensions = {
         fullHeight: boundingRect.width * 0.5,
