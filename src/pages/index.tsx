@@ -392,7 +392,7 @@ export default function Home() {
           on total vehicle lifecycle carbon footprint brought to my attention
           the fact that XC-40 Rehcharge (BEV) starts its lifecycle with a 70%
           larger carbon footprint than its ICE equivalent XC-40 and slowly
-          recouperates that carbon disadvantage over time at a rate dependent on
+          recuperates that carbon disadvantage over time at a rate dependent on
           the renewables mix of the electricity used to charge it.
         </div>
         <div className="text-md py-1">
