@@ -382,7 +382,7 @@ export default function Home() {
           Imagining the Volvo XC-40 as a PHEV
         </div>
         <div className="text-md py-1">
-          Volvo's excellent{" "}
+          Volvo&apos;s excellent{" "}
           <a
             href="https://www.volvocars.com/images/v/-/media/applications/pdpspecificationpage/xc40-electric/specification/volvo-carbon-footprint-report.pdf"
             className="text-md text-blue-500 underline"
@@ -421,10 +421,10 @@ export default function Home() {
         </div>
         <div className="text-md py-1">
           Notably absent from the Volvo study is a Plug-in Hybrid (PHEV) version
-          of the XC-40, because such a vehicle doesn't exist. Interestingly,
-          most PHEVs have a relatively small batteries vs BEVs, which means they
-          start at a smaller disadvantage for the carbon associated with battery
-          manufacturing.
+          of the XC-40, because such a vehicle doesn&apos;t exist.
+          Interestingly, most PHEVs have a relatively small batteries vs BEVs,
+          which means they start at a smaller disadvantage for the carbon
+          associated with battery manufacturing.
         </div>
         <div className="text-md py-1">
           This brings up an interesting implication. Under the right conditions,
@@ -432,7 +432,7 @@ export default function Home() {
           footprint than the BEV version. The most obvious condition under which
           this might be possible is if a PHEV XC-40 were driven with 100% of its
           miles using its EV mode and electric powertrain, as it would use-phase
-          carbon at the same rate as the BEV.
+          carbon at the same rate as the BEVf.
         </div>
         <div className="text-md py-1">
           Unknown is whether manufacturing the imagined PHEV XC-40 would have a
