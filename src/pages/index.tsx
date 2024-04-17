@@ -379,7 +379,7 @@ export default function Home() {
           <img src="2023-Volvo-XC40-Recharge.jpg" alt="Volvo XC-40 Recharge" />
         </div>
         <div className="text-4xl text-center w-full my-3">
-          Imagining the Volvo XC-40 as a PHEV
+          The Volvo Total Lifecycle Carbon Study and the Missing XC-40 PHEV
         </div>
         <div className="text-md py-1">
           Volvo&apos;s{" "}
@@ -410,13 +410,12 @@ export default function Home() {
           Imagining an XC-40 Plug-in Hybrid
         </div>
         <div className="text-md py-1">
-          Notably absent from the Volvo study is a Plug-in Hybrid (PHEV) version
-          of the XC-40, because such a vehicle doesn&apos;t exist. PHEVs are
-          interesting because they have a small batteries vs BEVs, which means
-          they start at a smaller disadvantage for the carbon associated with
-          battery manufacturing. Under the right conditions, could an imagined
-          XC-40 Plug-in Hybrid have a lower total lifecycle carbon footprint
-          than the BEV XC-40 Recharge?
+          Notably absent from the Volvo study is the Plug-in Hybrid (PHEV)
+          version of the XC-40. PHEVs are interesting because they have a small
+          batteries vs BEVs, which means they start at a smaller disadvantage
+          for the carbon associated with battery manufacturing. Under the right
+          conditions, could the XC-40 Plug-in Hybrid have a lower total
+          lifecycle carbon footprint than the BEV XC-40 Recharge?
         </div>
         <div className="text-md py-1">
           The following calculator parameterizes the inputs from the Volvo study
@@ -835,9 +834,8 @@ export default function Home() {
           such complexity may be negligble. Both ICE and BEV versions of the
           XC-40 have 1.4 metric tons of carbon associated with Volvo
           manufacturing—the second smallest category of carbon footprint (behind
-          EOL carbon). It is difficult to imagine that a hypothetical PHEV XC-40
-          would have a meaningfully different carbon footprint associated with
-          manufacturing.
+          EOL carbon). It is difficult to imagine that the PHEV XC-40 has a
+          meaningfully different carbon footprint associated with manufacturing.
         </div>
       </div>
     </main>
