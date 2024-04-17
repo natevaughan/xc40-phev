@@ -382,7 +382,7 @@ export default function Home() {
           Imagining the Volvo XC-40 as a PHEV
         </div>
         <div className="text-md py-1">
-          Volvo&apos;s excellent{" "}
+          Volvo&apos;s{" "}
           <a
             href="https://www.volvocars.com/images/v/-/media/applications/pdpspecificationpage/xc40-electric/specification/volvo-carbon-footprint-report.pdf"
             className="text-md text-blue-500 underline"
