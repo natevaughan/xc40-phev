@@ -105,12 +105,12 @@ export default function Home() {
 
   const [render, setRender] = useState<Render>(defaultRender);
 
-  const [renewablesMix, setRenewablesMix] = useState(21);
+  const [renewablesMix, setRenewablesMix] = useState(43);
   const [phevMix, setPhevMix] = useState(60);
   const [lifetimeMiles, setLifetimeMiles] = useState(125000);
   const [phevBatterySize, setPhevBatterySize] = useState(13.8);
   const [bevBatterySize, setBevBatterySize] = useState(79);
-  const [hybridEfficencyGain, setHybridEfficencyGain] = useState(19);
+  const [hybridEfficencyGain, setHybridEfficencyGain] = useState(25);
 
   const padding = 20;
   const legendPadding = 30;
@@ -589,31 +589,39 @@ export default function Home() {
 
             <div>
               <label className="text-xl">
-                PHEV Hybrid Efficiency increase:
+                PHEV Hybrid MPG increase:
                 <br />
                 <select
                   name="phevEfficiencyGain"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="19"
+                  defaultValue="25"
                   onChange={(e) => {
                     setHybridEfficencyGain(parseInt(e.target.value));
                   }}
                 >
-                  <option value="37">37% - Kia Sorento (City)</option>
+                  <option value="60">60%</option>
+                  <option value="55">55%</option>
+                  <option value="50">50%</option>
+                  <option value="45">45%</option>
+                  <option value="41">41% - Average (City)</option>
+                  <option value="40">40%</option>
                   <option value="35">35%</option>
                   <option value="30">30%</option>
-                  <option value="28">28% - Average (City)</option>
-                  <option value="25">25%</option>
-                  <option value="20">20% - Kia Sportage (Highway)</option>
-                  <option value="19">19% - Average (Combined)</option>
+                  <option value="28">28%</option>
+                  <option value="25">25% - Average (Combined)</option>
+                  <option value="20">20%</option>
                   <option value="15">15%</option>
-                  <option value="10">10% - Average (Highway)</option>
-                  <option value="5">5% - RAV4 (Highway)</option>
+                  <option value="12">12% - Average (Highway)</option>
+                  <option value="10">10%</option>
+                  <option value="5">5%</option>
                   <option value="0">0%</option>
                 </select>
               </label>
               <p className="text-gray-600">
-                Percent gain in efficiency of PHEV over ICE when using fuel
+                Percent gain in miles traveled per gallon of fuel used for PHEV
+                over ICE when using fuel. Averages are sourced from EPA
+                estimates of fuel economy for vehicles available in both ICE and
+                PHEV models.
               </p>
             </div>
           </div>
