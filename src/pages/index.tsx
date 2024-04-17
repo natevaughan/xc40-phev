@@ -106,11 +106,11 @@ export default function Home() {
   const [render, setRender] = useState<Render>(defaultRender);
 
   const [renewablesMix, setRenewablesMix] = useState(21);
-  const [phevMix, setPhevMix] = useState(70);
-  const [lifetimeMiles, setLifetimeMiles] = useState(175000);
-  const [phevBatterySize, setPhevBatterySize] = useState(14);
+  const [phevMix, setPhevMix] = useState(60);
+  const [lifetimeMiles, setLifetimeMiles] = useState(125000);
+  const [phevBatterySize, setPhevBatterySize] = useState(13.8);
   const [bevBatterySize, setBevBatterySize] = useState(79);
-  const [hybridEfficencyGain, setHybridEfficencyGain] = useState(30);
+  const [hybridEfficencyGain, setHybridEfficencyGain] = useState(19);
 
   const padding = 20;
   const legendPadding = 30;
@@ -153,9 +153,9 @@ export default function Home() {
       const bevTotal =
         bevMaterials + phevBattery + man + eol + phevBatteryUse + phevFuelUse;
       const max = Math.max(iceTotal, phevTotal, bevTotal) + 6;
-      const ticks = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].filter(
-        (it) => it < max,
-      );
+      const ticks = [
+        0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130,
+      ].filter((it) => it < max);
       setRender({
         dimensions: dimensions,
         max: max,
@@ -434,7 +434,7 @@ export default function Home() {
                 <select
                   name="lifetimeMiles"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="200000"
+                  defaultValue="125000"
                   onChange={(e) => {
                     setLifetimeMiles(parseInt(e.target.value));
                   }}
