@@ -390,76 +390,40 @@ export default function Home() {
             excellent study
           </a>{" "}
           on total vehicle lifecycle carbon footprint brought to my attention
-          the fact that BEVs start their lifecycle with a larger carbon
-          footprint than ICE equivalents and slowly recouperate that carbon
-          disadvantage over time.
-        </div>
-        <div className="text-2xl w-full my-3">
-          The BEV carbon footprint manufacturing disadvantage
+          the fact that XC-40 Rehcharge (BEV) starts its lifecycle with a 70%
+          larger carbon footprint than its ICE equivalent XC-40 and slowly
+          recouperates that carbon disadvantage over time at a rate dependent on
+          the renewables mix of the electricity used to charge it.
         </div>
         <div className="text-md py-1">
-          According to the study, this is primarily due to the additial carbon
-          footprint of additional aluminum (30% added carbon footprint) and the
-          battery (40% more carbon footprint) of the XC-40 Rehcharge (BEV) vs
-          standard XC-40 (ICE). The net result is a starting-line penalty of a
-          70% higher carbon footprint for the BEV.
+          The higher manufacturing carbon footprint of the XC-40 Recharge is
+          primarily due to greater use of aluminum (30% added carbon footprint)
+          and the battery (40% added carbon footprint) vs the equivalent ICE.
         </div>
         <div className="text-md py-1">
-          Over time, the XC-40 Recharge makes up this carbon footprint
-          disadvantage at a rate dictated by the renewables mix of the
-          electricity it is supplied with. The more that electricity is sourced
-          from renewables, the faster the XC-40 Recharge catches up.
-        </div>
-        <div className="text-md py-1">
-          The finish line is the total mileage of the vehicle across its
-          lifecycle. The higher the total lifecycle mileage, the lower the
-          carbon footprint of the XC-40 Recharge relative to its ICE equivalent
-          due to its per-mile advantage.
+          In all cases studied, the XC-40 recharge has a lower total lifecycle
+          carbon footprint, but the difference is determined by the renewables
+          mix of the electricity used to charge it and the total lifecycle
+          miles.
         </div>
         <div className="text-2xl w-full my-3">
           Imagining an XC-40 Plug-in Hybrid
         </div>
         <div className="text-md py-1">
           Notably absent from the Volvo study is a Plug-in Hybrid (PHEV) version
-          of the XC-40, because such a vehicle doesn&apos;t exist.
-          Interestingly, most PHEVs have a relatively small batteries vs BEVs,
-          which means they start at a smaller disadvantage for the carbon
-          associated with battery manufacturing.
+          of the XC-40, because such a vehicle doesn&apos;t exist. PHEVs are
+          interesting because they have a small batteries vs BEVs, which means
+          they start at a smaller disadvantage for the carbon associated with
+          battery manufacturing. Under the right conditions, could an imagined
+          XC-40 Plug-in Hybrid have a lower total lifecycle carbon footprint
+          than the BEV XC-40 Recharge?
         </div>
         <div className="text-md py-1">
-          This brings up an interesting implication. Under the right conditions,
-          the imagined PHEV XC-40 could have a lower total lifecycle carbon
-          footprint than the BEV version. The most obvious condition under which
-          this might be possible is if a PHEV XC-40 were driven with 100% of its
-          miles using its EV mode and electric powertrain, as it would use-phase
-          carbon at the same rate as the BEVf.
+          The following calculator parameterizes the inputs from the Volvo study
+          and allows you to see which vehicle has the lowest total carbon input
+          under what conditions.
         </div>
-        <div className="text-md py-1">
-          Unknown is whether manufacturing the imagined PHEV XC-40 would have a
-          lower or higher carbon footprint vs the BEV XC-40 Recharge. Noted in
-          the study is that the added use of aluminum and the battery are the
-          main sources of added carbon footprint in manufacturing the XC-40
-          Recharge. I assumed that the imagined PHEV XC-40 would use no more
-          aluminum than the BEV, and thus its materials manufacturing would be
-          equal. Noticing how much lower the carbon footprint materials for an
-          ICE vehicle, an imagined PHEV may be lower than a BEV, dispite both a
-          moderately-sized gas and electric powertrain.
-        </div>
-        <div className="text-2xl w-full my-3">The Hybrid Factor</div>
-        <div className="text-md py-1">
-          One other advantage a PHEV has over an ICE is for the gas miles
-          driven, a PHEV is able to use regenerative braking and electric
-          starts, which give it a fuel economy advantage over a pure ICE
-          powertrain. This efficiency gain is typically higher in the city
-          (30-40% efficiency gain) and lower on the highway (10-30% efficiency
-          gain).
-        </div>
-        <div className="text-2xl w-full my-3">Calculator</div>
-        <div className="text-md py-1">
-          The calculator below starts with the numbers from the Volvo study and
-          attempts to add in the imagined PHEV XC-40 and make the whole study
-          interactive by parameterizing each of the key variables.
-        </div>
+
         <div className="text-md py-1">Hope you enjoy!</div>
         <div className="grid md:grid-cols-3 gap-x-8 gap-y-2 py-2">
           <div>
@@ -499,7 +463,7 @@ export default function Home() {
                 <select
                   name="renewables"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="21"
+                  defaultValue="43"
                   onChange={(e) => {
                     setRenewablesMix(parseInt(e.target.value));
                   }}
@@ -573,6 +537,7 @@ export default function Home() {
                     setPhevBatterySize(parseFloat(e.target.value));
                   }}
                 >
+                  <option value="20">20 - Mitsubishi Outlander</option>
                   <option value="18.1">18.1 - RAV4 Prime</option>
                   <option value="16">16 - Chevy Volt</option>
                   <option value="13.8">13.8 - Kia PHEV models</option>
@@ -589,7 +554,7 @@ export default function Home() {
                 <select
                   name="phevMix"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="70"
+                  defaultValue="60"
                   onChange={(e) => {
                     setPhevMix(parseInt(e.target.value));
                   }}
@@ -629,19 +594,21 @@ export default function Home() {
                 <select
                   name="phevEfficiencyGain"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="20"
+                  defaultValue="19"
                   onChange={(e) => {
                     setHybridEfficencyGain(parseInt(e.target.value));
                   }}
                 >
-                  <option value="40">40%</option>
+                  <option value="37">37% - Kia Sorento (City)</option>
                   <option value="35">35%</option>
                   <option value="30">30%</option>
+                  <option value="28">28% - Average (City)</option>
                   <option value="25">25%</option>
-                  <option value="20">20%</option>
+                  <option value="20">20% - Kia Sportage (Highway)</option>
+                  <option value="19">19% - Average (Combined)</option>
                   <option value="15">15%</option>
-                  <option value="10">10%</option>
-                  <option value="5">5%</option>
+                  <option value="10">10% - Average (Highway)</option>
+                  <option value="5">5% - RAV4 (Highway)</option>
                   <option value="0">0%</option>
                 </select>
               </label>
@@ -837,6 +804,32 @@ export default function Home() {
               </g>
             </svg>
           </div>
+        </div>
+        <div className="text-2xl w-full my-3">Assumptions and Caveats</div>
+        <div className="text-md py-1">
+          One key assumption is that a PHEV has a materials carbon footprint
+          less than or equal to a BEV. The authors of the Volvo study cite the
+          extensive use of aluminum in BEV batteries and powertrains as being a
+          major source of added carbon footprint.
+        </div>
+        <div className="text-md py-1">
+          Curb weight is a reasonable proxy for the carbon footprint associated
+          with materials. Looking at vehicles available from major manufacturers
+          in both ICE and PHEV configurations or ICE and BEV configurations, on
+          average a PHEV weighs 14% more than its ICE equivalent, and a BEV
+          weighs 21% more than its ICE equivalent. Thus it is reasonable to
+          assume that a PHEV is no worse (and may be up to 5% better) than a BEV
+          from a materials standpoint.
+        </div>
+        <div className="text-md py-1">
+          What about added manufacturing complexity and engineering complexity
+          of the dual powertrains used in PHEVs? The Volvo study suggests that
+          such complexity may be negligble. Both ICE and BEV versions of the
+          XC-40 have 1.4 metric tons of carbon associated with Volvo
+          manufacturing—the second smallest category of carbon footprint (behind
+          EOL carbon). It is difficult to imagine that a hypothetical PHEV XC-40
+          would have a meaningfully different carbon footprint associated with
+          manufacturing.
         </div>
       </div>
     </main>
