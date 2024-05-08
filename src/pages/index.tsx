@@ -112,6 +112,17 @@ export default function Home() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [copied, setCopied] = useState(false);
+
+  function copy() {
+    const el = document.createElement("input");
+    el.value = window.location.href;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    setCopied(true);
+  }
 
   const setSearchParam = useCallback(
     (name: string, value: string) => {
@@ -447,18 +458,18 @@ export default function Home() {
         </div>
         <div className="text-md py-1">
           Notably absent from the Volvo study is the Plug-in Hybrid (PHEV)
-          version of the XC-40. The PHEV is interesting because it has a small
-          battery compared with the BEVs, which means it starts at a smaller
-          disadvantage for the carbon associated with battery manufacturing.
-          Under the right conditions, could the XC-40 Plug-in Hybrid have a
-          lower total lifecycle carbon footprint than the BEV XC-40 Recharge?
+          version of the XC-40. The PHEV is interesting because it has a much
+          smaller battery (10.7 KwH) compared with the BEV 79, which means it
+          starts at less disadvantage for the carbon associated with battery
+          manufacturing. Under the right conditions, could the XC-40 Plug-in
+          Hybrid have a lower total lifecycle carbon footprint than the BEV
+          XC-40 Recharge?
         </div>
         <div className="text-md py-1">
           The following calculator parameterizes the inputs from the Volvo study
           and allows you to see which vehicle has the lowest total carbon input
           under what conditions.
         </div>
-
         <div className="text-md py-1">Hope you enjoy!</div>
         <div className="grid md:grid-cols-3 gap-x-8 gap-y-2 py-2">
           <div>
@@ -622,7 +633,6 @@ export default function Home() {
                 Percent of all miles that are driven in pure EV for PHEV
               </p>
             </div>
-
             <div>
               <label className="text-xl">
                 PHEV Hybrid MPG increase:
@@ -847,6 +857,11 @@ export default function Home() {
                 </g>
               </g>
             </svg>
+            <div className="w-full text-right">
+              <button onClick={copy}>
+                {!copied ? "Copy link to this chart" : "Copied!"}
+              </button>
+            </div>
           </div>
         </div>
         <div className="text-2xl w-full my-3">Assumptions and Caveats</div>
