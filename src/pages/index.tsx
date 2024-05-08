@@ -554,15 +554,19 @@ export default function Home() {
                     setSearchParam(KEY_EV_BATT_SIZE, e.target.value);
                   }}
                 >
-                  <option value="131">
-                    131 - F150 Lightning Extended Range
+                  <option value="200">200 - Hummer EV</option>
+                  <option value="131">131 - F150 Lightning ER</option>
+                  <option value="100">
+                    100 - Tesla Model X, Kia EV9 AWD/LR
                   </option>
-                  <option value="100">100 - Tesla Model X, Kia EV9</option>
                   <option value="98">98 - F150 Ligtning</option>
                   <option value="79">79 - Volvo XC-40 Recharge</option>
-                  <option value="75">75 - Tesla Model Y Long Range</option>
+                  <option value="77">77 - Kia EV6 AWD/LR</option>
+                  <option value="76">77 - Kia EV9 Light</option>
+                  <option value="75">75 - Tesla Model Y LR</option>
                   <option value="65">65 - Chevy Bolt EV and EUV</option>
                   <option value="62">62 - Nissan Leaf 2017 Long range</option>
+                  <option value="58">58 - Kia EV6 Light</option>
                   <option value="56">56 - Tesla Model Y</option>
                   <option value="40">40 - Nissan Leaf 2017</option>
                   <option value="30">30 - Nissan Leaf 2016</option>
