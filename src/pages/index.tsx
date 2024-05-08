@@ -1,4 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+const KEY_RENEWABLES_MIX = "rx";
+const KEY_PHEV_MIX = "ex";
+const KEY_VEHICLE_LIFETIME = "lt";
+const KEY_PHEV_BATT_SIZE = "pb";
+const KEY_EV_BATT_SIZE = "eb";
+const KEY_HYBRID_EFFICIENCY = "he";
 
 interface Dimensions {
   fullHeight: number;
@@ -32,85 +40,111 @@ interface RenderedRect {
   y: number;
 }
 
+const colors = {
+  materials: "#939392",
+  manufacturing: "#567890",
+  battery: "#768fb1",
+  eol: "#2e2e2c",
+  batteryUse: "#c0c9d2",
+  fuelUse: "#e9e2c0",
+  legend: "#777",
+};
+
+const defaultRender: Render = {
+  dimensions: {
+    fullHeight: 100,
+    usableWidth: 50,
+    usableHeight: 50,
+  },
+  ticks: [],
+  max: 100,
+  ice: {
+    x: 0,
+    y: 0,
+    label: "ICE",
+    total: 0,
+    rects: [
+      {
+        key: "ice-man",
+        color: colors.manufacturing,
+        height: 10,
+        width: 5,
+        x: 10,
+        y: 10,
+      },
+    ],
+  },
+  phev: {
+    x: 0,
+    y: 0,
+    label: "PHEV",
+    total: 0,
+    rects: [
+      {
+        key: "phev-man",
+        color: colors.manufacturing,
+        height: 10,
+        width: 5,
+        x: 10,
+        y: 10,
+      },
+    ],
+  },
+  bev: {
+    x: 0,
+    y: 0,
+    label: "BEV",
+    total: 0,
+    rects: [
+      {
+        key: "bev-man",
+        color: colors.manufacturing,
+        height: 10,
+        width: 5,
+        x: 10,
+        y: 10,
+      },
+    ],
+  },
+};
+
 export default function Home() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const setSearchParam = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      router.push(pathname + "?" + params.toString(), { scroll: false });
+    },
+    [searchParams, pathname, router],
+  );
+
   const elementRef = useRef(null);
-
-  const colors = {
-    materials: "#939392",
-    manufacturing: "#567890",
-    battery: "#768fb1",
-    eol: "#2e2e2c",
-    batteryUse: "#c0c9d2",
-    fuelUse: "#e9e2c0",
-    legend: "#777",
-  };
-
-  const defaultRender: Render = {
-    dimensions: {
-      fullHeight: 100,
-      usableWidth: 50,
-      usableHeight: 50,
-    },
-    ticks: [],
-    max: 100,
-    ice: {
-      x: 0,
-      y: 0,
-      label: "ICE",
-      total: 0,
-      rects: [
-        {
-          key: "ice-man",
-          color: colors.manufacturing,
-          height: 10,
-          width: 5,
-          x: 10,
-          y: 10,
-        },
-      ],
-    },
-    phev: {
-      x: 0,
-      y: 0,
-      label: "PHEV",
-      total: 0,
-      rects: [
-        {
-          key: "phev-man",
-          color: colors.manufacturing,
-          height: 10,
-          width: 5,
-          x: 10,
-          y: 10,
-        },
-      ],
-    },
-    bev: {
-      x: 0,
-      y: 0,
-      label: "BEV",
-      total: 0,
-      rects: [
-        {
-          key: "bev-man",
-          color: colors.manufacturing,
-          height: 10,
-          width: 5,
-          x: 10,
-          y: 10,
-        },
-      ],
-    },
-  };
 
   const [render, setRender] = useState<Render>(defaultRender);
 
-  const [renewablesMix, setRenewablesMix] = useState(43);
-  const [phevMix, setPhevMix] = useState(60);
-  const [lifetimeMiles, setLifetimeMiles] = useState(125000);
-  const [phevBatterySize, setPhevBatterySize] = useState(13.8);
-  const [bevBatterySize, setBevBatterySize] = useState(79);
-  const [hybridEfficencyGain, setHybridEfficencyGain] = useState(25);
+  const renewablesMix: number = Number.parseInt(
+    searchParams.get(KEY_RENEWABLES_MIX) ?? "43",
+  );
+  const phevMix: number = Number.parseInt(
+    searchParams.get(KEY_PHEV_MIX) ?? "60",
+  );
+  const lifetimeMiles: number = Number.parseInt(
+    searchParams.get(KEY_VEHICLE_LIFETIME) ?? "125000",
+  );
+  const phevBatterySize: number = Number.parseFloat(
+    searchParams.get(KEY_PHEV_BATT_SIZE) ?? "10.7",
+  );
+  const bevBatterySize: number = Number.parseFloat(
+    searchParams.get(KEY_EV_BATT_SIZE) ?? "79",
+  );
+  const hybridEfficencyGain: number = Number.parseInt(
+    searchParams.get(KEY_HYBRID_EFFICIENCY) ?? "25",
+  );
 
   const padding = 20;
   const legendPadding = 30;
@@ -118,6 +152,7 @@ export default function Home() {
   const eol = 0.5;
   const man = 1.4;
   const iceMaterials = 14;
+  const phevMaterials = 16;
   const bevMaterials = 17;
 
   useEffect(() => {
@@ -149,7 +184,7 @@ export default function Home() {
       const iceFuelUse = 0.00034600896 * lifetimeMiles;
       const iceTotal = iceMaterials + man + eol + iceFuelUse;
       const phevTotal =
-        bevMaterials + phevBattery + man + eol + phevBatteryUse + phevFuelUse;
+        phevMaterials + phevBattery + man + eol + phevBatteryUse + phevFuelUse;
       const bevTotal =
         bevMaterials + phevBattery + man + eol + phevBatteryUse + phevFuelUse;
       const max = Math.max(iceTotal, phevTotal, bevTotal) + 6;
@@ -212,7 +247,7 @@ export default function Home() {
           y: 0,
           label: "PHEV",
           total:
-            bevMaterials +
+            phevMaterials +
             phevBattery +
             man +
             eol +
@@ -222,10 +257,10 @@ export default function Home() {
             {
               key: "phev-materials",
               color: colors.materials,
-              height: (dimensions.usableHeight * bevMaterials) / max,
+              height: (dimensions.usableHeight * phevMaterials) / max,
               width: dimensions.usableWidth / 9,
               x: 0,
-              y: dimensions.usableHeight * (1 - bevMaterials / max),
+              y: dimensions.usableHeight * (1 - phevMaterials / max),
             },
             {
               key: "phev-batt",
@@ -235,7 +270,7 @@ export default function Home() {
               x: 0,
               y:
                 dimensions.usableHeight *
-                  (1 - (bevMaterials + phevBattery) / max) -
+                  (1 - (phevMaterials + phevBattery) / max) -
                 1,
             },
             {
@@ -246,7 +281,7 @@ export default function Home() {
               x: 0,
               y:
                 dimensions.usableHeight *
-                  (1 - (bevMaterials + phevBattery + man) / max) -
+                  (1 - (phevMaterials + phevBattery + man) / max) -
                 2,
             },
             {
@@ -258,7 +293,8 @@ export default function Home() {
               y:
                 dimensions.usableHeight *
                   (1 -
-                    (bevMaterials + phevBattery + man + phevBatteryUse) / max) -
+                    (phevMaterials + phevBattery + man + phevBatteryUse) /
+                      max) -
                 3,
             },
             {
@@ -270,7 +306,7 @@ export default function Home() {
               y:
                 dimensions.usableHeight *
                   (1 -
-                    (bevMaterials +
+                    (phevMaterials +
                       phevBattery +
                       man +
                       phevBatteryUse +
@@ -287,7 +323,7 @@ export default function Home() {
               y:
                 dimensions.usableHeight *
                   (1 -
-                    (bevMaterials +
+                    (phevMaterials +
                       phevBattery +
                       man +
                       eol +
@@ -407,15 +443,15 @@ export default function Home() {
           miles.
         </div>
         <div className="text-2xl w-full my-3">
-          Imagining an XC-40 Plug-in Hybrid
+          Adding the XC-40 Plug-in Hybrid
         </div>
         <div className="text-md py-1">
           Notably absent from the Volvo study is the Plug-in Hybrid (PHEV)
-          version of the XC-40. PHEVs are interesting because they have a small
-          batteries vs BEVs, which means they start at a smaller disadvantage
-          for the carbon associated with battery manufacturing. Under the right
-          conditions, could the XC-40 Plug-in Hybrid have a lower total
-          lifecycle carbon footprint than the BEV XC-40 Recharge?
+          version of the XC-40. The PHEV is interesting because it has a small
+          battery compared with the BEVs, which means it starts at a smaller
+          disadvantage for the carbon associated with battery manufacturing.
+          Under the right conditions, could the XC-40 Plug-in Hybrid have a
+          lower total lifecycle carbon footprint than the BEV XC-40 Recharge?
         </div>
         <div className="text-md py-1">
           The following calculator parameterizes the inputs from the Volvo study
@@ -433,9 +469,9 @@ export default function Home() {
                 <select
                   name="lifetimeMiles"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="125000"
+                  value={lifetimeMiles.toString()}
                   onChange={(e) => {
-                    setLifetimeMiles(parseInt(e.target.value));
+                    setSearchParam(KEY_VEHICLE_LIFETIME, e.target.value);
                   }}
                 >
                   <option value="300000">300,000</option>
@@ -462,9 +498,9 @@ export default function Home() {
                 <select
                   name="renewables"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="43"
+                  value={renewablesMix.toString()}
                   onChange={(e) => {
-                    setRenewablesMix(parseInt(e.target.value));
+                    setSearchParam(KEY_RENEWABLES_MIX, e.target.value);
                   }}
                 >
                   <option value="100">100% - VT</option>
@@ -502,15 +538,15 @@ export default function Home() {
                 <select
                   name="bevBatterySize"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="79"
+                  value={bevBatterySize.toString()}
                   onChange={(e) => {
-                    setBevBatterySize(parseInt(e.target.value));
+                    setSearchParam(KEY_EV_BATT_SIZE, e.target.value);
                   }}
                 >
                   <option value="131">
                     131 - F150 Lightning Extended Range
                   </option>
-                  <option value="100">100 - Tesla Model X</option>
+                  <option value="100">100 - Tesla Model X, Kia EV9</option>
                   <option value="98">98 - F150 Ligtning</option>
                   <option value="79">79 - Volvo XC-40 Recharge</option>
                   <option value="75">75 - Tesla Model Y Long Range</option>
@@ -531,15 +567,16 @@ export default function Home() {
                 <select
                   name="phevBatterySize"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="13.8"
+                  value={phevBatterySize.toString()}
                   onChange={(e) => {
-                    setPhevBatterySize(parseFloat(e.target.value));
+                    setSearchParam(KEY_PHEV_BATT_SIZE, e.target.value);
                   }}
                 >
                   <option value="20">20 - Mitsubishi Outlander</option>
                   <option value="18.1">18.1 - RAV4 Prime</option>
                   <option value="16">16 - Chevy Volt</option>
                   <option value="13.8">13.8 - Kia PHEV models</option>
+                  <option value="10.7">10.7 - XC-40 PHEV</option>
                   <option value="8.8">8.8 - Prius Prime</option>
                 </select>
               </label>
@@ -553,9 +590,9 @@ export default function Home() {
                 <select
                   name="phevMix"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="60"
+                  value={phevMix.toString()}
                   onChange={(e) => {
-                    setPhevMix(parseInt(e.target.value));
+                    setSearchParam(KEY_PHEV_MIX, e.target.value);
                   }}
                 >
                   <option value="100">100%</option>
@@ -593,9 +630,9 @@ export default function Home() {
                 <select
                   name="phevEfficiencyGain"
                   className="text-gray-600 shadow appearance-none border rounded w-full py-2 px-3"
-                  defaultValue="25"
+                  value={hybridEfficencyGain}
                   onChange={(e) => {
-                    setHybridEfficencyGain(parseInt(e.target.value));
+                    setSearchParam(KEY_HYBRID_EFFICIENCY, e.target.value);
                   }}
                 >
                   <option value="60">60%</option>
