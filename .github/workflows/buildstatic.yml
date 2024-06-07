@@ -10,8 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Yarn install
-        run: yarn
+      - name: Enable corepack and install dependencies
+        run: |
+          corepack enable
+          yarn
 
       - name: Next build
         run: npx next build
