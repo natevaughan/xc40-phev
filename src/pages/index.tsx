@@ -145,7 +145,7 @@ export default function Home() {
     searchParams.get(KEY_PHEV_MIX) ?? "60",
   );
   const lifetimeMiles: number = Number.parseInt(
-    searchParams.get(KEY_VEHICLE_LIFETIME) ?? "125000",
+    searchParams.get(KEY_VEHICLE_LIFETIME) ?? "150000",
   );
   const phevBatterySize: number = Number.parseFloat(
     searchParams.get(KEY_PHEV_BATT_SIZE) ?? "10.7",
